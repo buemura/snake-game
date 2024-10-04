@@ -62,21 +62,25 @@ public class Game extends JPanel implements ActionListener, KeyListener {
     }
 
     public void draw(Graphics g) {
-        for (int i = 0; i < Board.width / tileSize; i++) {
-            g.drawLine(i*tileSize, 0, i*tileSize, Board.height);
-            g.drawLine(0, i*tileSize, Board.width,  i*tileSize);
-        }
-
         // Food
         g.setColor(Color.red);
-        g.fillRect(food.x * tileSize, food.y * tileSize, tileSize, tileSize);
+        g.fill3DRect(food.x * tileSize, food.y * tileSize, tileSize, tileSize, true);
 
-        // Snake
+        // Snake Head
         g.setColor(Color.GREEN);
-        g.fillRect(snakeHead.x * tileSize, snakeHead.y * tileSize, tileSize, tileSize);
+        g.fill3DRect(snakeHead.x * tileSize, snakeHead.y * tileSize, tileSize, tileSize, true);
 
         // Snake body
-        snakeBody.forEach(tile -> g.fillRect(tile.x * tileSize, tile.y * tileSize, tileSize, tileSize));
+        snakeBody.forEach(tile -> g.fill3DRect(tile.x * tileSize, tile.y * tileSize, tileSize, tileSize, true));
+
+        // Score
+        g.setFont(new Font("Arial", Font.PLAIN, 20));
+        if (gameOver) {
+            g.setColor(Color.red);
+            g.drawString("Game Over: " + String.valueOf(snakeBody.size()), tileSize - 16, tileSize);
+        } else {
+            g.drawString("Score: " + String.valueOf(snakeBody.size()), tileSize - 16, tileSize);
+        }
     }
 
     public void placeFood() {
