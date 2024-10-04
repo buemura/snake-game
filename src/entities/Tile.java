@@ -1,8 +1,9 @@
 package entities;
 
 public class Tile {
-    int x;
-    int y;
+    public int x;
+    public int y;
+    public static int size = 25;
 
     public Tile(int x, int y) {
         this.x = x;
