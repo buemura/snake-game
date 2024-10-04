@@ -1,5 +1,8 @@
+import entities.Food;
+import entities.Snake;
 import entities.Tile;
 import helpers.InputEvent;
+import ui.Board;
 import ui.Score;
 
 import javax.swing.*;
@@ -9,16 +12,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
-import java.util.Random;
 
 public class Game extends JPanel implements ActionListener, KeyListener {
     // Snake
-    Tile snakeHead;
-    ArrayList<Tile> snakeBody;
+    Snake snakeHead;
+    ArrayList<Snake> snakeBody;
 
     // Food
-    Tile food;
-    Random random;
+    Food food;
 
     // Game Logic
     Timer gameLoop;
@@ -32,12 +33,11 @@ public class Game extends JPanel implements ActionListener, KeyListener {
         addKeyListener(this);
         setFocusable(true);
 
-        snakeHead = new Tile(5, 5);
-        snakeBody = new ArrayList<Tile>();
+        snakeHead = new Snake(5, 5);
+        snakeBody = new ArrayList<Snake>();
 
-        food = new Tile(10, 10);
-        random = new Random();
-        placeFood();
+        food = new Food(10, 10);
+        food.generate();
 
         velocityX = 0;
         velocityY = 1;
@@ -67,16 +67,11 @@ public class Game extends JPanel implements ActionListener, KeyListener {
         Score.drawScore(g, gameOver, snakeBody.size());
     }
 
-    public void placeFood() {
-        food.x = random.nextInt(Board.width / Tile.size);
-        food.y = random.nextInt(Board.height / Tile.size);
-    }
-
     public void move() {
         // Eat food
-        if (collision(snakeHead, food)) {
-            snakeBody.add(new Tile(food.x, food.y));
-            placeFood();
+        if (snakeHead.ateFood(food)) {
+            snakeBody.add(new Snake(food.x, food.y));
+            food.generate();
         }
 
         // Snake body
@@ -98,17 +93,10 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 
         // Game Over conditions
         snakeBody.forEach(snakePart -> {
-            if (collision(snakeHead, snakePart)) gameOver = true;
+            if (snakeHead.collidedWithBody(snakePart)) gameOver = true;
         });
 
-        if (snakeHead.x * Tile.size < 0 || snakeHead.x * Tile.size > Board.width ||
-                snakeHead.y *Tile.size < 0 || snakeHead.y * Tile.size > Board.height) {
-            gameOver = true;
-        }
-    }
-
-    public boolean collision(Tile tile1, Tile tile2) {
-        return tile1.x == tile2.x && tile1.y == tile2.y;
+        if (snakeHead.leftMap()) gameOver = true;
     }
 
     @Override
