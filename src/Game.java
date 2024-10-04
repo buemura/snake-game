@@ -75,7 +75,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
         }
 
         // Snake body
-        for (int i = snakeBody.size() -1; i >= 0; i--) {
+        for (int i = snakeBody.size() - 1; i >= 0; i--) {
             Tile snakePart = snakeBody.get(i);
             if (i == 0) {
                 snakePart.x = snakeHead.x;
@@ -125,8 +125,10 @@ public class Game extends JPanel implements ActionListener, KeyListener {
     }
 
     @Override
-    public void keyTyped(KeyEvent e) {}
+    public void keyTyped(KeyEvent e) {
+    }
 
     @Override
-    public void keyReleased(KeyEvent e) {}
+    public void keyReleased(KeyEvent e) {
+    }
 }

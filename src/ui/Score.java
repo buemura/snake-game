@@ -9,11 +9,11 @@ public class Score {
         g.setFont(new Font("Arial", Font.PLAIN, 20));
 
         if (!gameOver) {
-            g.drawString("Score: " + String.valueOf(score), Tile.size - 16, Tile.size);
+            g.drawString("Score: " + score, Tile.size - 16, Tile.size);
             return;
         }
 
         g.setColor(Color.red);
-        g.drawString("Game Over: " + String.valueOf(score), Tile.size - 16, Tile.size);
+        g.drawString("Game Over: " + score, Tile.size - 16, Tile.size);
     }
 }

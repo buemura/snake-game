@@ -8,8 +8,7 @@ public class Snake extends Tile {
     }
 
     public boolean leftMap() {
-        return this.x * Tile.size < 0 || this.x * Tile.size > Board.width ||
-                this.y *Tile.size < 0 || this.y * Tile.size > Board.height;
+        return this.x * Tile.size < 0 || this.x * Tile.size > Board.width || this.y * Tile.size < 0 || this.y * Tile.size > Board.height;
     }
 
     public boolean collidedWithBody(Snake bodyPart) {
